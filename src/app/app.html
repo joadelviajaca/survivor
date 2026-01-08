@@ -8,14 +8,7 @@
 
   <div class="lista-tareas">
     @for (tarea of tareas; track tarea.id) {
-      <div class="tarjeta-tarea" [class.completada]="tarea.completada">
-        <div class="info">
-          <input type="checkbox" [checked]="tarea.completada" (change)="cambiarEstado(tarea)">
-          <span class="titulo">{{ tarea.titulo }}</span>
-          <span class="badge">{{ tarea.prioridad }}</span>
-        </div>
-        <button class="btn-borrar" (click)="borrarTarea(tarea.id)">🗑️</button>
-      </div>
+      <app-task [task]="tarea" (deleteClick)="borrarTarea($event)" ></app-task>
       } @empty {
       <p class="sistema-ok">🟢 SISTEMAS NOMINALES. SIN TAREAS PENDIENTES.</p>
     }

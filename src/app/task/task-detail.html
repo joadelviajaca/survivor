@@ -1,0 +1,9 @@
+<div class="tarjeta-tarea" [class.completada]="task.completada">
+    <div class="info">
+        <!-- <input type="checkbox" [checked]="task.completada" (change)="cambiarEstado(task)"> -->
+         <input type="checkbox" [checked]="task.completada">
+        <span class="titulo">{{ task.titulo }}</span>
+        <span class="badge">{{ task.prioridad }}</span>
+    </div>
+    <button class="btn-borrar" (click)="onDelete()">🗑️</button>
+</div>
