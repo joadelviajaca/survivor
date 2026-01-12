@@ -10,8 +10,12 @@ import { Task } from '../interfaces/Task.interface';
 export class TaskDetail {
   @Input() task !: Task;
   @Output() deleteClick = new EventEmitter<number>();
-
+  @Output() completeClick = new EventEmitter<void>();
   onDelete(){
     this.deleteClick.emit(this.task.id);
+  }
+
+  onComplete() {
+    this.completeClick.emit();
   }
 }

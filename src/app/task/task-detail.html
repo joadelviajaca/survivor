@@ -1,7 +1,6 @@
 <div class="tarjeta-tarea" [class.completada]="task.completada">
     <div class="info">
-        <!-- <input type="checkbox" [checked]="task.completada" (change)="cambiarEstado(task)"> -->
-         <input type="checkbox" [checked]="task.completada">
+        <input type="checkbox" [checked]="task.completada" (change)="onComplete()">
         <span class="titulo">{{ task.titulo }}</span>
         <span class="badge">{{ task.prioridad }}</span>
     </div>
