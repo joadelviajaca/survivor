@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Task } from './interfaces/Task.interface';
 import { TaskDetail } from "./task/task-detail";
+import { TaskService } from './services/task-service';
 
 
 @Component({
@@ -12,12 +13,16 @@ import { TaskDetail } from "./task/task-detail";
   styleUrl: './app.css'
 })
 export class App {
-  nuevaTarea = '';
-  
-  tareas: Task[] = [
-    { id: 1, titulo: 'Revisar generadores de oxígeno', prioridad: 'alta', completada: false },
-    { id: 2, titulo: 'Inventario de latas de conserva', prioridad: 'media', completada: true }
-  ];
+
+  // Forma tradicional de inyectar dependencias
+  // constructor(private taskService: TaskService){
+    //   this.tasks = this.taskService.getTasks();
+    // }
+    
+    nuevaTarea = '';
+    private taskService: TaskService = inject(TaskService);
+    tasks: Task[] = this.taskService.getTasks();
+
 
   agregarTarea() {
     if (this.nuevaTarea.trim()) {
