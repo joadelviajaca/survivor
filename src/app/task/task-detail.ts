@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Task } from '../interfaces/Task.interface';
+import { TaskService } from '../services/task-service';
 
 @Component({
   selector: 'app-task',
@@ -9,13 +10,16 @@ import { Task } from '../interfaces/Task.interface';
 })
 export class TaskDetail {
   @Input() task !: Task;
-  @Output() deleteClick = new EventEmitter<number>();
-  @Output() completeClick = new EventEmitter<void>();
+
+  private taskService = inject(TaskService);
+
   onDelete(){
-    this.deleteClick.emit(this.task.id);
+    // this.deleteClick.emit(this.task.id);
+   this .taskService.deleteTask(this.task.id);
+    // this.deleteClick.emit();
   }
 
   onComplete() {
-    this.completeClick.emit();
+    this.taskService.changeStatus(this.task.id);
   }
 }

@@ -21,27 +21,17 @@ export class App {
     
     nuevaTarea = '';
     private taskService: TaskService = inject(TaskService);
-    tasks: Task[] = this.taskService.getTasks();
+    // tasks: Task[] = this.taskService.getTasks();
+    // taskLists$ = this.taskService.tasks$;
+    taskLists$ = this.taskService.getTasks();
 
 
   agregarTarea() {
     if (this.nuevaTarea.trim()) {
-      const tarea: Task = {
-        id: Date.now(),
-        titulo: this.nuevaTarea,
-        prioridad: 'media', // Por defecto
-        completada: false
-      };
-      this.tareas.push(tarea);
+      this.taskService.addTask(this.nuevaTarea.trim());
       this.nuevaTarea = ''; // Limpiar input
     }
-  }
 
-  borrarTarea(id: number) {
-    this.tareas = this.tareas.filter(t => t.id !== id);
   }
-
-  cambiarEstado(tarea: Task) {
-    tarea.completada = !tarea.completada;
-  }
-}
+    
+} 

@@ -1,18 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../interfaces/Task.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  tasks: Task[] = [
+
+  private _tareaSubject = new BehaviorSubject<Task[]>([
     { id: 1, title: 'Revisar generadores de oxígeno', priority: 'alta', completed: false },
     { id: 2, title: 'Inventario de latas de conserva', priority: 'media', completed: true }
-  ];
+  ])
+  // tasks: Task[] = [
+  //   { id: 1, title: 'Revisar generadores de oxígeno', priority: 'alta', completed: false },
+  //   { id: 2, title: 'Inventario de latas de conserva', priority: 'media', completed: true }
+  // ];
 
-  getTasks(){
-    return [...this.tasks]
+  tasks$ = this._tareaSubject.asObservable();
+  getTasks(): Observable<Task[]> {
+    return this._tareaSubject.asObservable();
   }
+  // getTasks(){
+  //   return [...this.tasks]
+  // }
 
   addTask(title:string){
     const task: Task = {
@@ -21,10 +31,28 @@ export class TaskService {
         priority: 'media', // Por defecto
         completed: false
       };
-    this.tasks.push(task)
+    const actualTasks = this._tareaSubject.value;
+    actualTasks.push(task);
+    this._tareaSubject.next(actualTasks);
+    // this.tasks.push(task)
   }
 
   deleteTask(id:number){
-    this.tasks = this.tasks.filter(task => task.id !== id);
+    const actualTasks = this._tareaSubject.value;
+    const newTasks = actualTasks.filter(task => task.id !== id);
+    this._tareaSubject.next(newTasks);
+  }
+
+  changeStatus(id:number){
+    // const task = this.tasks.find(task => task.id === id);
+    // if (task){
+    //   task.completed = !task.completed;
+    // }
+    const actualTasks = this._tareaSubject.value;
+    const task = actualTasks.find(task => task.id === id);
+    if (task) {
+      task.completed = !task.completed;
+    }
+    this._tareaSubject.next(actualTasks);
   }
 }

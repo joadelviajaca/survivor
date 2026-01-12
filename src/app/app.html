@@ -7,8 +7,8 @@
   </div>
 
   <div class="lista-tareas">
-    @for (tarea of tareas; track tarea.id) {
-      <app-task [task]="tarea" (deleteClick)="borrarTarea($event)" (completeClick)="cambiarEstado(tarea)" ></app-task>
+    @for (task of taskLists$|async; track task.id) {
+      <app-task [task]="task"></app-task>
       } @empty {
       <p class="sistema-ok">🟢 SISTEMAS NOMINALES. SIN TAREAS PENDIENTES.</p>
     }
