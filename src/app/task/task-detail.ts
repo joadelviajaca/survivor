@@ -15,13 +15,13 @@ export class TaskDetail {
 
   onDelete(){
     // this.deleteClick.emit(this.task.id);
-   this .taskService.deleteTask(this.task.id);
+  //  this .taskService.deleteTask(this.task.id);
   //  this.change.emit();
     // this.deleteClick.emit();
   }
 
   onComplete() {
-    this.taskService.changeStatus(this.task.id);
+    // this.taskService.changeStatus(this.task.id);
     // this.change.emit();
   }
 }

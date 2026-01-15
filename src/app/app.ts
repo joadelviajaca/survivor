@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, Signal, signal } from '@angular/core';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { Component, inject, OnInit, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Task } from './interfaces/Task.interface';
 import { TaskDetail } from "./task/task-detail";
@@ -14,15 +14,23 @@ import { Observable } from 'rxjs';
   styleUrl: './app.css'
 })
 export class App {
-  tasks : Signal<Task[]>;
+  // tasks : Signal<Task[]>;
+  // tasks$ : Observable<Task[]>;
+  tasks : Task[] = [];
   // tasks$ : Observable<Task[]>;
   // Forma tradicional de inyectar dependencias
   constructor(private taskService: TaskService){
       // this.tasks$ = this.taskService.getTasks();
       //this.tasks$ = this.taskService.tasks$;
-      this.tasks = this.taskService.tasks;
+     this.taskService.getTasks()
+     .subscribe((tasks)=> {
+      this.tasks = tasks
+   } )
 
     }
+
+   
+
     
     nuevaTarea = '';
     // private taskService: TaskService = inject(TaskService);
@@ -33,9 +41,13 @@ export class App {
 
   agregarTarea() {
     if (this.nuevaTarea.trim()) {
-      this.taskService.addTask(this.nuevaTarea.trim());
+      this.taskService.addTask(this.nuevaTarea.trim())
+      .subscribe({
+        next: (task) => this.tasks.push(task),
+        error: (error) => console.log(error)
+      })
       this.nuevaTarea = ''; // Limpiar input
-      // this.tasks = this.taskService.getTasks();
+    //   // this.tasks = this.taskService.getTasks();
     }
 
   }
