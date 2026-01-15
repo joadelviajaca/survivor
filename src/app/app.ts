@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Task } from './interfaces/Task.interface';
 import { TaskDetail } from "./task/task-detail";
@@ -14,11 +14,14 @@ import { Observable } from 'rxjs';
   styleUrl: './app.css'
 })
 export class App {
-  tasks$ : Observable<Task[]>;
+  tasks : Signal<Task[]>;
+  // tasks$ : Observable<Task[]>;
   // Forma tradicional de inyectar dependencias
   constructor(private taskService: TaskService){
-      this.tasks$ = this.taskService.getTasks();
+      // this.tasks$ = this.taskService.getTasks();
       //this.tasks$ = this.taskService.tasks$;
+      this.tasks = this.taskService.tasks;
+
     }
     
     nuevaTarea = '';
