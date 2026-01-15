@@ -10,16 +10,18 @@ import { TaskService } from '../services/task-service';
 })
 export class TaskDetail {
   @Input() task !: Task;
-
-  private taskService = inject(TaskService);
+  @Output() change = new EventEmitter<void>();
+  private taskService : TaskService = inject(TaskService);
 
   onDelete(){
     // this.deleteClick.emit(this.task.id);
    this .taskService.deleteTask(this.task.id);
+  //  this.change.emit();
     // this.deleteClick.emit();
   }
 
   onComplete() {
     this.taskService.changeStatus(this.task.id);
+    // this.change.emit();
   }
 }

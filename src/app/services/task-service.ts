@@ -11,7 +11,7 @@ export class TaskService {
     { id: 1, title: 'Revisar generadores de oxígeno', priority: 'alta', completed: false },
     { id: 2, title: 'Inventario de latas de conserva', priority: 'media', completed: true }
   ])
-  // tasks: Task[] = [
+  // private tasks: Task[] = [
   //   { id: 1, title: 'Revisar generadores de oxígeno', priority: 'alta', completed: false },
   //   { id: 2, title: 'Inventario de latas de conserva', priority: 'media', completed: true }
   // ];
@@ -21,6 +21,7 @@ export class TaskService {
     return this._tareaSubject.asObservable();
   }
   // getTasks(){
+  //   // return this.tasks;
   //   return [...this.tasks]
   // }
 
@@ -32,8 +33,8 @@ export class TaskService {
         completed: false
       };
     const actualTasks = this._tareaSubject.value;
-    actualTasks.push(task);
-    this._tareaSubject.next(actualTasks);
+    // actualTasks.push(task);
+    this._tareaSubject.next([...actualTasks,task]);
     // this.tasks.push(task)
   }
 
@@ -41,6 +42,7 @@ export class TaskService {
     const actualTasks = this._tareaSubject.value;
     const newTasks = actualTasks.filter(task => task.id !== id);
     this._tareaSubject.next(newTasks);
+    // this.tasks = this.tasks.filter(task => task.id !== id);
   }
 
   changeStatus(id:number){

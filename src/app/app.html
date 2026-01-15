@@ -5,12 +5,13 @@
     <input [(ngModel)]="nuevaTarea" placeholder="Nueva orden de reparación..." (keyup.enter)="agregarTarea()">
     <button (click)="agregarTarea()">REGISTRAR</button>
   </div>
-
+<p>{{nuevaTarea}}</p>
   <div class="lista-tareas">
-    @for (task of taskLists$|async; track task.id) {
-      <app-task [task]="task"></app-task>
+    @for (task of tasks$|async; track task.id) {
+      <app-task [task]="task" ></app-task>
       } @empty {
       <p class="sistema-ok">🟢 SISTEMAS NOMINALES. SIN TAREAS PENDIENTES.</p>
     }
+
   </div>
 </div>
